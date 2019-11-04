@@ -42,21 +42,30 @@ class MyListComponent extends React.Component {
 
         this.props.store.state.items.forEach((item, i) => 
           items.push((
-            <View key={i} style={{flexDirection: 'row'}}>
-              <Button title="X" onPress={() => this.onItemDelete(item, i)} />
-              <TouchableOpacity onPress={() => this.onItemPress(item, i, item.votes)} style={{marginBottom: 10, backgroundColor: 'powderblue', padding: 10}}>
-                <Text style={{fontSize: 24, color: 'black'}}>{item.band}</Text>
-              </TouchableOpacity>
-              <Text style={{fontSize: 24, color: 'black'}}>{item.votes}</Text>              
+            <View key={i}>
+              <View style={{backgroundColor: 'pink', marginBottom: 10}}>
+                <TouchableOpacity onPress={() => this.onItemPress(item, i, item.votes)} style={{padding: 10}}>
+                  <Text style={styles.font}>Band: {item.band}</Text>
+                  <Text style={styles.font}>Votes: {item.votes}</Text>  
+                </TouchableOpacity>
+                <Button title="Delete to Start a War" onPress={() => this.onItemDelete(item, i)} />
+              </View>
+              
+                        
             </View>
         ))
         )
 
       return (
         <View>
-          <View style={{marginBottom: 50, flexDirection: 'row'}}>
-            <TextInput style={{backgroundColor: 'white', width: 100}} value={this.state.value} placeholder="Add a Band" onChangeText={text => this.onChange(text)}/>
-            <Button disabled={!this.state.value} title="Add Item" onPress={() => this.onClick()}/>
+          <Text style={styles.font}>Tap to Vote for Your Favorite Band!</Text>
+          <Text style={styles.font}>May the Best Band (and Fans) Win</Text>
+
+          <View style={styles.margin}>
+            <TextInput style={{backgroundColor: 'white', width: 200}} value={this.state.value} placeholder="Add a Band" onChangeText={text => this.onChange(text)}/>
+            <View style={{backgroundColor: 'lightgrey'}}>
+              <Button disabled={!this.state.value} title="Add Item" onPress={() => this.onClick()}/>
+            </View>
           </View>
           {items}
         </View>
@@ -64,6 +73,21 @@ class MyListComponent extends React.Component {
     }
   }
   
-  MyListComponent = store.connect(MyListComponent)
+const styles = StyleSheet.create({
+  font: {
+    fontSize: 20, 
+    textAlign: 'center'
+  },
 
-  export default MyListComponent
+  margin: {
+    marginBottom: 20,
+    marginTop: 20,
+    flexDirection: 'row'
+
+  }
+
+})
+
+MyListComponent = store.connect(MyListComponent)
+
+export default MyListComponent
